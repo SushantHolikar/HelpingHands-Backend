@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+.env
 
 # testing
 /coverage
@@ -18,4 +19,4 @@
 
 npm-debug.log*
 yarn-debug.log*
-yarn-error.log*
+yarn-error.log*git push -u origin main
