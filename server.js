@@ -1,7 +1,7 @@
 require('./config/db');
-var cors=require('cors')
+var cors=require('cors');
 const app = require('express')();
-const port = 5000 ;
+const port = process.env.PORT || 5000 ;
 const multer = require("multer")
 const path = require("path")
 const authPost = require("./routes/posts")
@@ -12,13 +12,16 @@ const authDonationCard = require("./routes/DonationCard")
 const UserRouter = require('./api/User');
 const DonorRouter = require('./api/Donor')
 app.use("/api/auth",require("./routes/auth"))
-app.use(cors())
+app.use(cors());
 
 const bodyParser = require ('express').json ;
 app.use(bodyParser());
-// app.use(cors({
-//     origin: 'http://localhost:3000/1', // allow requests from only this domain
-//   }));
+app.use(cors({
+  origin: 'https://helpinghands-miniproject.netlify.app',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
+
 app.use('/user', UserRouter);
 app.use('/donor', DonorRouter)
 app.use(function(req, res, next) {
