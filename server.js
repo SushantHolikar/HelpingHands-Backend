@@ -39,7 +39,7 @@ app.use(function(req, res, next) {
     res.status(200).json("File has been uploaded")
   })
   
-  app.post("/payment", cors(), async (req, res) => {
+  app.post("/stripeDonateUs", cors(), async (req, res) => {
     let { amount, id } = req.body
     try {
       const payment = await stripe.paymentIntents.create({
