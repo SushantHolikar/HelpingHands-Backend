@@ -44,7 +44,7 @@ app.use(function(req, res, next) {
     try {
       const payment = await stripe.paymentIntents.create({
         amount,
-        currency: "₹",
+        currency: "INR",
         description: "Donation",
         payment_method: id,
         confirm: true
