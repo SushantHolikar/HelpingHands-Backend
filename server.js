@@ -7,8 +7,7 @@ const path = require("path")
 const authPost = require("./routes/posts")
 const authEvent = require("./routes/events")
 const authDonationCard = require("./routes/DonationCard")
-const stripe = require("@stripe/stripe-js")
-
+const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST)
 const UserRouter = require('./api/User');
 const DonorRouter = require('./api/Donor')
 app.use("/api/auth",require("./routes/auth"))
