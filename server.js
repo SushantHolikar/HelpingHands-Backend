@@ -7,7 +7,7 @@ const path = require("path")
 const authPost = require("./routes/posts")
 const authEvent = require("./routes/events")
 const authDonationCard = require("./routes/DonationCard")
-
+const stripe = require("@stripe/stripe-js")
 
 const UserRouter = require('./api/User');
 const DonorRouter = require('./api/Donor')
@@ -41,6 +41,7 @@ app.use(function(req, res, next) {
   
   app.post("/stripeDonateUs", cors(), async (req, res) => {
     let { amount, id } = req.body
+    console.log(req);
     try {
       const payment = await stripe.paymentIntents.create({
         amount,
