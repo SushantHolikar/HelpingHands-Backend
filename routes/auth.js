@@ -138,5 +138,15 @@ router.get("/getspecificpost/:postId", async (req, res) => {
     res.status(404).json(error)
   }
 })
+
+//get similar labels
+router.get("/getlabel/:postId", async (req, res) => {
+  try {
+    const post = await DonationCard.find({label:req.params.postId})
+    res.status(200).json(post)
+  } catch (error) {
+    res.status(404).json(error)
+  }
+})
  
 module.exports=router

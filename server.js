@@ -17,6 +17,7 @@ const bodyParser = require ('express').json ;
 app.use(bodyParser());
 app.use('/user', UserRouter);
 app.use('/donor', DonorRouter)
+
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "http://localhost:3000");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -28,7 +29,6 @@ app.use(function(req, res, next) {
       callb(null, "images")
     },
     filename: (req, file, callb) => {
-      //callb(null, "file.png")
       callb(null, req.body.name)
     },
   })
