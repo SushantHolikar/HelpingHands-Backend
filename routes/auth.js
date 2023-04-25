@@ -149,4 +149,60 @@ router.get("/getlabel/:postId", async (req, res) => {
   }
 })
  
+
+//amount DonateUs
+
+router.put('/donors/:email/donate/:amount', async (req, res) => {
+  const { email } = req.params;
+  const { amount } = req.params;
+  try {
+    const donor = await Donor.findOne({ email: email });
+    if (!donor) {
+      return res.status(404).json({ message: 'Donor not found' });
+    }
+    donor.amount += parseInt(amount);
+    await donor.save();
+    res.json(donor);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server Error' });
+  }
+});
+
+router.put('/users/:email/donate/:amount', async (req, res) => {
+  const { email } = req.params;
+  const { amount } = req.params;
+  try {
+    const donor = await User.findOne({ email: email });
+    if (!donor) {
+      return res.status(404).json({ message: 'Donor not found' });
+    }
+    donor.amount += parseInt(amount);
+    await donor.save();
+    res.json(donor);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server Error' });
+  }
+});
+
+//Specific Donation NGO
+
+router.put('/donation-cards/:donationcardId/update-fund/:amount', async (req, res) => {
+  const { donationcardId, amount } = req.params;
+  try {
+    const card = await DonationCard.findById(donationcardId);
+    if (!card) {
+      return res.status(404).json({ message: 'Donation card not found' });
+    }
+    card.currentFund += parseInt(amount);
+    await card.save();
+    res.json(card);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server Error' });
+  }
+});
+
+
 module.exports=router

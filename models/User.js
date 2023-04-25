@@ -16,7 +16,12 @@ const UserSchema = new Schema({
     profileImage:{
         type:String,
         default:"https://cdn.onlinewebfonts.com/svg/img_258694.png"
-    }
+    },
+    amount:{
+        type: Number,
+            default: 0
+    },
+    
 });
 
 const User = mongoose.model('User', UserSchema);

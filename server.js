@@ -3,11 +3,9 @@ var cors=require('cors');
 const app = require('express')();
 const port = process.env.PORT || 5000 ;
 const multer = require("multer")
-const path = require("path")
 const authPost = require("./routes/posts")
 const authEvent = require("./routes/events")
 const authDonationCard = require("./routes/DonationCard")
-const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST)
 const UserRouter = require('./api/User');
 const DonorRouter = require('./api/Donor')
 app.use("/api/auth",require("./routes/auth"))
@@ -37,32 +35,6 @@ app.use(function(req, res, next) {
   app.post("/upload", upload.single("file"), (req, res) => {
     res.status(200).json("File has been uploaded")
   })
-  
-  app.post("/stripeDonateUs", cors(), async (req, res) => {
-    let { amount, id } = req.body
-    console.log(req);
-    try {
-      const payment = await stripe.paymentIntents.create({
-        amount,
-        currency: "INR",
-        description: "Donation",
-        payment_method: id,
-        confirm: true
-      })
-      console.log("Payment", payment)
-      res.json({
-        message: "Payment successful",
-        success: true
-      })
-    } catch (error) {
-      console.log("Error", error)
-      res.json({
-        message: "Payment failed",
-        success: false
-      })
-    }
-  })
-  
 
 app.use("/posts", authPost)
 app.use("/events", authEvent)
