@@ -354,7 +354,7 @@ router.post('/signin', (req, res) => {
                             {
                                 res.json({
                                     status: "FAILED",
-                                    message: "Admin pending"
+                                    message: "Admin Verification Pending"
                                 })
                             }
                             else if(data[0].adminVerified=='0'){
