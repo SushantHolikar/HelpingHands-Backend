@@ -338,6 +338,7 @@ router.post('/signin', (req, res) => {
         User.find({ email })
             .then(data => {
                 if (data.length) {
+
                         
                     if(!data[0].verified){
                         res.json({
@@ -348,12 +349,29 @@ router.post('/signin', (req, res) => {
                         const hashedPassword = data[0].password;
                     bcrypt.compare(password, hashedPassword).then(result => {
                         if (result) {
-                          
-                            res.json({
-                                status: "SUCCESS",
-                                message: "Sign in successful",
-                                data: data
-                            })
+                            
+                            if(data[0].adminVerified=='1')
+                            {
+                                res.json({
+                                    status: "FAILED",
+                                    message: "Admin pending"
+                                })
+                            }
+                            else if(data[0].adminVerified=='0'){
+                                res.json({
+                                    status: "FAILED",
+                                    message: "Admin rejected your request"
+                                })
+
+                            }
+                            else {
+                                res.json({
+                                    status: "SUCCESS",
+                                    message: "Sign in successful",
+                                    data: data
+                                })
+                            }
+                           
                         } else {
                             res.json({
                                 status: "FAILED",
@@ -362,6 +380,8 @@ router.post('/signin', (req, res) => {
                         }
                     })
                         .catch(err => {
+
+
                             res.json({
                                 status: "FAILED",
                                 message: "An error occured"
