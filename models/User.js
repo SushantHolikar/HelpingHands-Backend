@@ -21,6 +21,10 @@ const UserSchema = new Schema({
         type: Number,
             default: 0
     },
+    posted:{
+        type:Boolean,
+        default:false
+    }
     
 });
 

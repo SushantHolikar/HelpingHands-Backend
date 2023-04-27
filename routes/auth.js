@@ -24,6 +24,7 @@ router.get('/getuser',
   .catch(error=>console.log(error));
   });
 
+  
 
   router.get('/getspecificuser/:email',
   async (req, res) => {
@@ -106,6 +107,7 @@ router.get('/getuser',
     }
   })
 
+
   router.get('/getEvent',
   async (req, res) => {
     await Event.find()
@@ -138,6 +140,7 @@ router.get("/getspecificpost/:postId", async (req, res) => {
     res.status(404).json(error)
   }
 })
+
 
 //get similar labels
 router.get("/getlabel/:postId", async (req, res) => {
@@ -185,7 +188,38 @@ router.put('/users/:email/donate/:amount', async (req, res) => {
     res.status(500).json({ message: 'Server Error' });
   }
 });
+router.get('/updateuser/:email', async (req, res) => {
+  try {
+    console.log("inside update")
+    const { email } = req.params;
+    await User.findOneAndUpdate({
+       email:email
+     },{
+       $set:{
+         posted:true
+       }
+     })
+    const user=await User.find({email:email});
+     res.json(user);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server Error' });
+  }
+});
 
+
+router.get('/donations-sum', async (req, res) => {
+  try {
+    const sum = await DonationCard.aggregate().group({
+      _id: null,
+      totalFund: { $sum: '$currentFund' }
+    });
+    res.json(sum[0].totalFund);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
 //Specific Donation NGO
 
 router.put('/donation-cards/:donationcardId/update-fund/:amount', async (req, res) => {
@@ -203,6 +237,17 @@ router.put('/donation-cards/:donationcardId/update-fund/:amount', async (req, re
     res.status(500).json({ message: 'Server Error' });
   }
 });
+
+//
+router.get("/getspecific/:email", async (req, res) => {
+  try {
+    const post = await DonationCard.findOne({ email: req.params.email })
+    res.status(200).json(post)
+  } catch (error) {
+    res.status(404).json(error)
+  }
+})
+
 
 
 module.exports=router

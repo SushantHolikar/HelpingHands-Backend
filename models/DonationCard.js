@@ -11,6 +11,7 @@ const DonationCardSchema = new mongoose.Schema(
       type: String,
       require: true,
     },
+    email: {type:String},
     label: {
         type: String,
         require: true,
