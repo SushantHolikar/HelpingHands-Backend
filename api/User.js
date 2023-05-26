@@ -142,7 +142,7 @@ const sendVerificationEmail = ({ _id, email }, res) => {
         from: process.env.AUTH_EMAIL,
         to: email,
         subject: "Verify Your Email",
-        html: `<p>Verify your email address to complete signup process and login to your account.</p> <P>This link <b>expires in 6 hours<b>.</p> <p> Press <a href=${"http://localhost:3000/#/" + "user/verify/" + _id + "/" }>here </a> to proceed. </p>`,
+        html: `<p>Verify your email address to complete signup process and login to your account.</p> <P>This link <b>expires in 6 hours<b>.</p> <p> Press <a href=${"https://helpinghands-miniproject.netlify.app/#/" + "user/verify/" + _id + "/" }>here </a> to proceed. </p>`,
 
     };
 
